@@ -1,5 +1,8 @@
 from django.shortcuts import render,HttpResponse
 from tracker.models import JobApplication
+from .forms import JobApplicationForm
+from django.shortcuts import render, redirect 
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
@@ -25,3 +28,17 @@ def Rejected(request):
 def Pending(request):
     obj = JobApplication.objects.filter(status = 'pending')
     return render(request,'Pendding.html',{'jobs':obj})
+
+
+def add_job(request):
+    
+    if request.method == 'POST':
+        form = JobApplicationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+        else:
+            print(form.errors)
+    else:
+        form = JobApplicationForm()
+    return render (request,'add_job.html',{'form':form})

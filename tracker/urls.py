@@ -8,7 +8,8 @@ urlpatterns = [
     path('contact',views.contact,name='contactus'),
     path('Applied/',views.applied,name = 'appliedIN'),
     path('Rejected/',views.Rejected, name = 'RejectedFrom'),
-    path('pending/',views.Pending, name  = 'pending')
+    path('pending/',views.Pending, name  = 'pending'),
+    path('add_job/',views.add_job,name = 'Add_Job')
     
 ]
 
