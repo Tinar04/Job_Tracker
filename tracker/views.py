@@ -53,5 +53,24 @@ def register(request):
         else:
             form  = UserCreationForm()
         return render(request,'register.html',{'form':form})
+
+
+@login_required
+def delete_job(request,id):
+    job = JobApplication.objects.get(id = id, user  = request.user)
+    job.delete()
+    return redirect('home')
         
-   
+
+@login_required
+def edit_job(request,id):
+    job = JobApplication.objects.get(id =id,user=request.user)
+    if request.method == 'POST':
+        form = JobApplicationForm(request.POST,instance=job)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+        
+    else:
+        form = JobApplicationForm(instance = job)
+    return render(request,'edit_job.html',{'form':form})

@@ -11,6 +11,8 @@ urlpatterns = [
     path('pending/',views.Pending, name  = 'pending'),
     path('add_job/',views.add_job,name = 'Add_Job'),
     path('register/',views.register,name = 'register'),
+    path('delete/<int:id>/', views.delete_job, name='delete_job'),
+    path('edit/<int:id>/', views.edit_job, name='edit_job'),
     
 ]
 
