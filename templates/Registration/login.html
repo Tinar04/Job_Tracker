@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Login</title>
+        <style>
+            #btn{
+                background-Color = "pink";
+
+            }
+        </style>
+    </head>
+    <body>
+        <div id = "container" style = "height:200px;width : 200px; border : 2px solid black ;margin: auto;margin-top:200px; ">
+            <form method = "POST">
+               {% csrf_token %}
+               {{form.as_p}}
+               <button type = "submit" id = "btn">Login</button>
+            </form>
+
+        </div>
+    </body>
+</html>
