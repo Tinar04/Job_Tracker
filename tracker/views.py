@@ -4,8 +4,15 @@ from tracker.models import JobApplication
 from .forms import JobApplicationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+
+@login_required
 def index(request):
-    return render(request, 'index.html')
+    context = {
+        'applied':JobApplication.objects.filter(status = 'applied',user = request.user).count(),
+        'rejected':JobApplication.objects.filter(status = 'rejected',user = request.user).count(),
+        'pending':JobApplication.objects.filter(status = 'pending',user = request.user).count()
+    }
+    return render(request, 'index.html', context)
 
 def about(request):
     return render(request, 'AboutUs.html')
@@ -74,3 +81,5 @@ def edit_job(request,id):
     else:
         form = JobApplicationForm(instance = job)
     return render(request,'edit_job.html',{'form':form})
+
+
