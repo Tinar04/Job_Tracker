@@ -11,8 +11,7 @@ class JobApplication(models.Model):
     ('interview_completed', 'Interview Completed'),
     ('offer', 'Offer Received'),
     ('accepted', 'Accepted'),
-    ('rejected', 'Rejected'),
-    ('withdrawn', 'Withdrawn')]
+    ('rejected', 'Rejected')]
 
     company_name = models.CharField(max_length=100)
     role = models.CharField(max_length=50)

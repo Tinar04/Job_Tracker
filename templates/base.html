@@ -15,6 +15,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Job Tracker</a>
+    <a class="btn btn-success" href="{% url 'Add_Job' %}">+ Add Job</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -31,11 +32,16 @@
             companies
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'appliedIN'%}">Applied</a></li>
-            <li><a class="dropdown-item" href="{%url 'RejectedFrom'%}">Rejected</a></li>
-             <li><a class="dropdown-item" href="{%url 'pending'%}">Pendding</a></li>
+            <li><li><a class="dropdown-item" href="{% url 'jobs_by_status' 'applied' %}">Applied</a></li></li>
+            <li><a href="{% url 'jobs_by_status' 'rejected' %}">Rejected</a></li>
+             <li><a href="{% url 'jobs_by_status' 'shortlisted' %}">Shortlisted</a></li>
+            <li><a href="{% url 'jobs_by_status' 'interview_scheduled' %}">Interview Scheduled</a></li>
+            <li><a href="{% url 'jobs_by_status' 'interview_completed' %}">Interview Completed</a></li>
+            <li><a href="{% url 'jobs_by_status' 'offer' %}">Offer Received</a></li>
+            <li><a href="{% url 'jobs_by_status' 'accepted' %}">Accepted</a></li>
+            <li><a href="{% url 'jobs_by_status' 'review' %}">Under Review</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Find more</a></li>
+           
           </ul>
         </li>
         <li class="nav-item">

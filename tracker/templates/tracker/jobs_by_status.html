@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h3>{{ status | title }} Companies</h3>
+    <div class="row">
+        {% for job in jobs %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ job.company_name }}</h5>
+                    <p><strong>Role:</strong> {{ job.role }}</p>
+                    <p><strong>Location:</strong> {{ job.office_location }}</p>
+                    <p><strong>Salary:</strong> {{ job.salary }}</p>
+                    <p><strong>Status:</strong> {{ job.status }}</p>
+                    <p><strong>Date:</strong> {{ job.date_of_application }}</p>
+                    <p><strong>Source:</strong> {{ job.source_of_application }}</p>
+                    <p><strong>Notes:</strong> {{ job.notes }}</p>
+                    <a href="{% url 'edit_job' job.id %}">Edit</a>
+                    <a href="{% url 'delete_job' job.id %}" onclick="return confirm('Are you sure?')">Delete</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

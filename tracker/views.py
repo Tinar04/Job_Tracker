@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
+
 from tracker.models import JobApplication
 from .forms import JobApplicationForm
 from django.contrib.auth.decorators import login_required
@@ -7,12 +7,15 @@ from django.contrib.auth.forms import UserCreationForm
 
 @login_required
 def index(request):
+    statuses = ['applied', 'review', 'shortlisted', 'interview_scheduled', 
+                'interview_completed', 'offer', 'accepted', 'rejected']
+    
     context = {
-        'applied':JobApplication.objects.filter(status = 'applied',user = request.user).count(),
-        'rejected':JobApplication.objects.filter(status = 'rejected',user = request.user).count(),
-        'pending':JobApplication.objects.filter(status = 'pending',user = request.user).count()
+        status: JobApplication.objects.filter(status=status, user=request.user).count()
+        for status in statuses
     }
     return render(request, 'index.html', context)
+    
 
 def about(request):
     return render(request, 'AboutUs.html')
@@ -21,17 +24,10 @@ def contact(request):
     return render(request, 'Contact.html')
 
 @login_required
-def applied(request):
-    obj = JobApplication.objects.filter(status='applied',user = request.user)
-    return render(request, 'Applied.html', {'jobs': obj})
-@login_required
-def Rejected(request):
-    obj = JobApplication.objects.filter(status='rejected',user = request.user)
-    return render(request, 'Rejected.html', {'jobs': obj})
-@login_required
-def Pending(request):
-    obj = JobApplication.objects.filter(status='pending',user = request.user)
-    return render(request, 'Pendding.html', {'jobs': obj})
+def jobs_by_status(request,status):
+    obj = JobApplication.objects.filter(status=status, user=request.user)
+    return render(request, 'tracker/jobs_by_status.html',{'jobs':obj,'status':status})
+
 
 @login_required
 def add_job(request):
@@ -49,37 +45,33 @@ def add_job(request):
     return render(request, 'Add_job.html', {'form': form})
 
 def register(request):
-
-        if request.method == 'POST':
-            form = UserCreationForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect('login')
-            else:
-                print(form.errors)
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
         else:
-            form  = UserCreationForm()
-        return render(request,'register.html',{'form':form})
-
+            print(form.errors)
+    else:
+        form = UserCreationForm()
+    return render(request, 'register.html', {'form': form})
 
 @login_required
-def delete_job(request,id):
-    job = JobApplication.objects.get(id = id, user  = request.user)
+def delete_job(request, id):
+    job = get_object_or_404(JobApplication, id=id, user=request.user)
     job.delete()
     return redirect('home')
-        
 
 @login_required
-def edit_job(request,id):
-    job = JobApplication.objects.get(id =id,user=request.user)
+def edit_job(request, id):
+    job = get_object_or_404(JobApplication, id=id, user=request.user)
     if request.method == 'POST':
-        form = JobApplicationForm(request.POST,instance=job)
+        form = JobApplicationForm(request.POST, instance=job)
         if form.is_valid():
             form.save()
             return redirect('home')
-        
     else:
-        form = JobApplicationForm(instance = job)
-    return render(request,'edit_job.html',{'form':form})
+        form = JobApplicationForm(instance=job)
+    return render(request, 'edit_job.html', {'form': form})
 
 

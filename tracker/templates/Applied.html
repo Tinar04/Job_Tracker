@@ -16,7 +16,7 @@
                   <p class = "card-text"><strong>Source:</strong> {{job.source_of_application }}</p>
                   <p class = "card-text"><strong>Your Note:</strong> {{job.notes }}</p>
                   <a href="{% url 'edit_job' job.id %}">Edit</a>
-                  <a href="{% url 'delete_job' job.id %}">Delete</a>
+                  <a href="{% url 'delete_job' job.id %}" onclick="return confirm('Are you sure you want to delete this application?')">Delete</a>
                </div>
             </div>
          </div>              
