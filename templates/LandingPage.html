@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobTracker — Track Your Journey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --navy: #0f1f3d;
+            --navy-mid: #1a3a6b;
+            --navy-light: #1e4a8a;
+            --gold: #f5a623;
+            --gold-light: #fbbf47;
+            --white: #ffffff;
+            --gray-100: #f8f9fb;
+            --gray-200: #e8ecf2;
+            --gray-500: #6b7280;
+            --gray-800: #1f2937;
+            --card-dark: #162c56;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--white);
+            color: var(--gray-800);
+            overflow-x: hidden;
+        }
+
+        /* ── NAVBAR ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(15, 31, 61, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .brand {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        .brand span { color: var(--gold); }
+        .nav-links { display: flex; gap: 0.75rem; align-items: center; }
+        .btn-ghost {
+            color: var(--white);
+            text-decoration: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.25);
+            transition: all 0.2s;
+        }
+        .btn-ghost:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+        .btn-gold {
+            background: var(--gold);
+            color: var(--navy);
+            text-decoration: none;
+            padding: 0.5rem 1.4rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+        .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #0d2d5e 100%);
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px; right: -200px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(245,166,35,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px; left: -100px;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(30,74,138,0.4) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(245,166,35,0.15);
+            color: var(--gold);
+            border: 1px solid rgba(245,166,35,0.3);
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 span { color: var(--gold); }
+        .hero p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+        .hero-cta { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+        .btn-primary-hero {
+            background: var(--gold);
+            color: var(--navy);
+            text-decoration: none;
+            padding: 0.9rem 2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+        .btn-primary-hero:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,166,35,0.3); }
+        .btn-secondary-hero {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.2s;
+        }
+        .btn-secondary-hero:hover { color: var(--white); }
+
+        /* Hero visual */
+        .hero-visual {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+        .mock-header {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+        .mock-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+        }
+        .mock-dot:nth-child(1) { background: #ff5f57; }
+        .mock-dot:nth-child(2) { background: #ffbd2e; }
+        .mock-dot:nth-child(3) { background: #28ca41; }
+        .mock-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .mock-stat {
+            background: rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        .mock-stat-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        .mock-stat-label {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 0.2rem;
+        }
+        .mock-list { display: flex; flex-direction: column; gap: 0.5rem; }
+        .mock-item {
+            background: rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .mock-company { color: var(--white); font-size: 0.85rem; font-weight: 500; }
+        .mock-role { color: rgba(255,255,255,0.4); font-size: 0.75rem; }
+        .mock-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        .badge-applied { background: rgba(59,130,246,0.2); color: #60a5fa; }
+        .badge-interview { background: rgba(245,166,35,0.2); color: var(--gold); }
+        .badge-offer { background: rgba(34,197,94,0.2); color: #4ade80; }
+        .badge-rejected { background: rgba(239,68,68,0.2); color: #f87171; }
+
+        /* ── FEATURES ── */
+        .features {
+            padding: 6rem 2rem;
+            background: var(--gray-100);
+        }
+        .section-inner { max-width: 1200px; margin: 0 auto; }
+        .section-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--navy-mid);
+            margin-bottom: 0.75rem;
+        }
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--navy);
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+        }
+        .section-sub {
+            color: var(--gray-500);
+            font-size: 1.05rem;
+            max-width: 500px;
+            line-height: 1.6;
+            margin-bottom: 3rem;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        .feature-card {
+            background: var(--card-dark);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .feature-card:hover { transform: translateY(-4px); }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 120px; height: 120px;
+            background: radial-gradient(circle, rgba(245,166,35,0.1) 0%, transparent 70%);
+        }
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+        }
+        .feature-card p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* ── STEPS ── */
+        .steps-section {
+            padding: 6rem 2rem;
+            background: var(--navy);
+        }
+        .steps-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+        .steps-list { display: flex; flex-direction: column; gap: 2rem; }
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+        .step-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--gold);
+            line-height: 1;
+            min-width: 2.5rem;
+        }
+        .step h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.4rem;
+        }
+        .step p {
+            color: rgba(255,255,255,0.55);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .register-box {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+        }
+        .register-box h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .register-box p {
+            color: var(--gray-500);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .register-box a.main-cta {
+            display: block;
+            background: var(--gold);
+            color: var(--navy);
+            text-decoration: none;
+            padding: 0.9rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            transition: background 0.2s;
+        }
+        .register-box a.main-cta:hover { background: var(--gold-light); }
+        .register-box .login-link {
+            color: var(--gray-500);
+            font-size: 0.85rem;
+        }
+        .register-box .login-link a {
+            color: var(--navy-mid);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .register-box .login-link a:hover { text-decoration: underline; }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--gray-800);
+            padding: 3rem 2rem;
+        }
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-brand {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--white);
+        }
+        .footer-brand span { color: var(--gold); }
+        .footer-links { display: flex; gap: 1.5rem; }
+        .footer-links a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--white); }
+        .footer-copy {
+            color: rgba(255,255,255,0.3);
+            font-size: 0.8rem;
+            width: 100%;
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .hero-inner, .features-grid, .steps-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero-visual { display: none; }
+            .mock-stats { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="brand">Job<span>Tracker</span></a>
+            <div class="nav-links">
+                <a href="/login/" class="btn-ghost">Login</a>
+                <a href="/register/" class="btn-gold">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <div class="hero-badge">🚀 Your placement companion</div>
+                <h1>Track Every <span>Application</span>. Land Your Dream Job.</h1>
+                <p>Stop losing track of where you applied. JobTracker keeps all your applications organised — from first apply to final offer — so you can focus on what matters: getting placed.</p>
+                <div class="hero-cta">
+                    <a href="/register/" class="btn-primary-hero">Start Tracking Free</a>
+                    <a href="/login/" class="btn-secondary-hero">Already have an account? Login →</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="mock-header">
+                    <div class="mock-dot"></div>
+                    <div class="mock-dot"></div>
+                    <div class="mock-dot"></div>
+                </div>
+                <div class="mock-stats">
+                    <div class="mock-stat">
+                        <div class="mock-stat-num">24</div>
+                        <div class="mock-stat-label">Applied</div>
+                    </div>
+                    <div class="mock-stat">
+                        <div class="mock-stat-num">8</div>
+                        <div class="mock-stat-label">Interviews</div>
+                    </div>
+                    <div class="mock-stat">
+                        <div class="mock-stat-num">3</div>
+                        <div class="mock-stat-label">Offers</div>
+                    </div>
+                    <div class="mock-stat">
+                        <div class="mock-stat-num">1</div>
+                        <div class="mock-stat-label">Accepted</div>
+                    </div>
+                </div>
+                <div class="mock-list">
+                    <div class="mock-item">
+                        <div>
+                            <div class="mock-company">Google</div>
+                            <div class="mock-role">Software Engineer</div>
+                        </div>
+                        <span class="mock-badge badge-interview">Interview</span>
+                    </div>
+                    <div class="mock-item">
+                        <div>
+                            <div class="mock-company">Flipkart</div>
+                            <div class="mock-role">SDE-1</div>
+                        </div>
+                        <span class="mock-badge badge-offer">Offer 🎉</span>
+                    </div>
+                    <div class="mock-item">
+                        <div>
+                            <div class="mock-company">Amazon</div>
+                            <div class="mock-role">Backend Developer</div>
+                        </div>
+                        <span class="mock-badge badge-applied">Applied</span>
+                    </div>
+                    <div class="mock-item">
+                        <div>
+                            <div class="mock-company">Microsoft</div>
+                            <div class="mock-role">Full Stack Dev</div>
+                        </div>
+                        <span class="mock-badge badge-rejected">Rejected</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+        <div class="section-inner">
+            <div class="section-label">Why JobTracker</div>
+            <h2 class="section-title">Everything you need to stay organised</h2>
+            <p class="section-sub">Built by a student, for students going through placement season.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Track All Applications</h3>
+                    <p>Add every company you apply to. Track company name, role, location, salary, and source — all in one place.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>8 Status Stages</h3>
+                    <p>From Applied to Offer Received — update your application status at every stage of the process.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Dashboard Overview</h3>
+                    <p>See exactly how many applications are in each stage at a glance. Know your numbers anytime.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3>Interview Notes</h3>
+                    <p>Store feedback and notes after every interview round. Learn from each experience and improve.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STEPS -->
+    <section class="steps-section">
+        <div class="section-inner">
+            <div class="steps-grid">
+                <div>
+                    <div class="section-label" style="color: rgba(255,255,255,0.4);">How it works</div>
+                    <h2 class="section-title" style="color: var(--white);">Get started in minutes</h2>
+                    <div class="steps-list">
+                        <div class="step">
+                            <div class="step-num">1</div>
+                            <div>
+                                <h4>Create your account</h4>
+                                <p>Sign up for free. No credit card needed. Your data is private and only visible to you.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num">2</div>
+                            <div>
+                                <h4>Add your applications</h4>
+                                <p>Every time you apply somewhere, add it. Takes 30 seconds. Never lose track again.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num">3</div>
+                            <div>
+                                <h4>Update as you progress</h4>
+                                <p>Got a call? Update the status. Appeared for interview? Add your notes. Offer received? Celebrate. 🎉</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="register-box">
+                    <h3>Start tracking today</h3>
+                    <p>Free forever. No limits. Just results.</p>
+                    <a href="/register/" class="main-cta">Create Free Account</a>
+                    <div class="login-link">Already have an account? <a href="/login/">Login here</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">Job<span>Tracker</span></div>
+            <div class="footer-links">
+                <a href="/about-us/">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/login/">Login</a>
+                <a href="/register/">Register</a>
+            </div>
+        </div>
+        <div class="footer-inner">
+            <div class="footer-copy">Built during placement season. For students, by a student. 🔥</div>
+        </div>
+    </footer>
+
+</body>
+</html>

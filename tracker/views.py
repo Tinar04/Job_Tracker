@@ -5,16 +5,22 @@ from .forms import JobApplicationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 
-@login_required
+
 def index(request):
-    statuses = ['applied', 'review', 'shortlisted', 'interview_scheduled', 
+    
+    return render(request, 'LandingPage.html')
+
+@login_required
+def DashBoard(request):
+    status = ['applied', 'review', 'shortlisted', 'interview_scheduled', 
                 'interview_completed', 'offer', 'accepted', 'rejected']
     
     context = {
-        status: JobApplication.objects.filter(status=status, user=request.user).count()
-        for status in statuses
+        status:JobApplication.objects.filter(status = status,user=request.user).count()
+        for status in status
     }
-    return render(request, 'index.html', context)
+
+    return render(request,'index.html',context)
     
 
 def about(request):
