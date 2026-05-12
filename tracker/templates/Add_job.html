@@ -1,10 +1,36 @@
-{%extends 'base.html'%}
-{%block content%}
+{% extends 'base.html' %}
+{% block content %}
 
-<form method = "POST">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type = "submit">Add Application</button>
-</form>
+<div class="topbar">
+    <div>
+        <div class="topbar-title">Add Application</div>
+        <div class="topbar-sub">Track a new job application</div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card border-0 shadow-sm" style="border-radius:14px;">
+            <div class="card-body p-4">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label fw-600" style="color:#0f1f3d;">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                        <div class="text-danger" style="font-size:0.8rem;">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="submit" class="add-btn">✅ Save Application</button>
+                        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary" style="border-radius:8px;">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

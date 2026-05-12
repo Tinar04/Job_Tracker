@@ -1,99 +1,87 @@
-{%extends 'base.html'%}
-{%load static%}
+{% extends 'base.html' %}
 {% block content %}
 
-
-
-
-<div class="container mt-4">
-    <h2>My Job Applications</h2>
-    <div class="row">
-        <div class="col-md-4">
-             <a href="{% url 'jobs_by_status' 'applied' %}" style="text-decoration:none;">
-            <div class="card text-white bg-primary mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Applied</h5>
-                    <h1 class="card-text">{{ applied }}</h1>
-                </div>
-            </div>
-        </a>
-        </div>
-        <div class="col-md-4">
-             <a href="{% url 'jobs_by_status' 'rejected' %}" style="text-decoration:none;">
-            <div class="card text-white bg-danger mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Rejected</h5>
-                    <h1 class="card-text">{{ rejected }}</h1>
-                </div>
-            </div>
-        </a>
-        </div>
-        <div class="col-md-4">
-            <a href="{% url 'jobs_by_status' 'review' %}" style="text-decoration:none;">
-                <div class="card text-white bg-warning mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">review</h5>
-                        <h1 class="card-text">{{ review }}</h1>
-                    </div>
-                </div>
-            </a>
-     </div>
-     <div class="col-md-4">
-        <a href="{% url 'jobs_by_status' 'shortlisted' %}" style="text-decoration:none;">
-            <div class="card text-white bg-info mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Shortlisted</h5>
-                    <h1 class="card-text">{{ shortlisted }}</h1>
-                </div>
-            </div>
-        </a>
-     </div>
-
-     <div class="col-md-4">
-        <a href="{% url 'jobs_by_status' 'interview_scheduled' %}" style="text-decoration:none;">
-            <div class="card text-white bg-secondary mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Interview Scheduled</h5>
-                    <h1 class="card-text">{{ interview_scheduled }}</h1>
-                </div>
-            </div>
-        </a>
-     </div>
-
-     <div class="col-md-4">
-            <a href="{% url 'jobs_by_status' 'interview_completed' %}" style="text-decoration:none;">
-                <div class="card text-white bg-dark mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Interview Completed</h5>
-                        <h1 class="card-text">{{ interview_completed }}</h1>
-                    </div>
-                </div>
-            </a>
-      </div>
-
-      <div class="col-md-4">
-            <a href="{% url 'jobs_by_status' 'offer' %}" style="text-decoration:none;">
-                <div class="card text-white bg-success mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Offer Received</h5>
-                        <h1 class="card-text">{{ offer }}</h1>
-                    </div>
-                </div>
-            </a>
-       </div>
-
-       <div class="col-md-4">
-            <a href="{% url 'jobs_by_status' 'accepted' %}" style="text-decoration:none;">
-              <div class="card text-white bg-success mb-3">
-                    <div class="card-body">
-                       <h5 class="card-title">Accepted</h5>
-                       <h1 class="card-text">{{ accepted }}</h1>
-                    </div>
-                </div>
-            </a>
-       </div>
+<div class="topbar">
+    <div>
+        <div class="topbar-title">Dashboard 👋</div>
+        <div class="topbar-sub">Welcome back, {{ request.user.username }}. Here's your overview.</div>
     </div>
+    <a href="{% url 'Add_Job' %}" class="add-btn">➕ Add Application</a>
 </div>
 
+<div class="row g-3">
+    <div class="col-md-3">
+        <a href="{% url 'jobs_by_status' 'applied' %}" style="text-decoration:none;">
+            <div class="card border-0 shadow-sm p-3 h-100" style="background:#1a3a6b;border-radius:14px;">
+                <div style="font-size:2rem;font-weight:800;color:#f5a623;font-family:'Syne',sans-serif;">{{ applied }}</div>
+                <div style="color:rgba(255,255,255,0.7);font-size:0.85rem;">Applied</div>
+                <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;margin-top:0.5rem;">📩 View all →</div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="{% url 'jobs_by_status' 'review' %}" style="text-decoration:none;">
+            <div class="card border-0 shadow-sm p-3 h-100" style="background:#1e4a8a;border-radius:14px;">
+                <div style="font-size:2rem;font-weight:800;color:#f5a623;font-family:'Syne',sans-serif;">{{ review }}</div>
+                <div style="color:rgba(255,255,255,0.7);font-size:0.85rem;">Under Review</div>
+                <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;margin-top:0.5rem;">🔍 View all →</div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="{% url 'jobs_by_status' 'shortlisted' %}" style="text-decoration:none;">
+            <div class="card border-0 shadow-sm p-3 h-100" style="background:#f5a623;border-radius:14px;">
+                <div style="font-size:2rem;font-weight:800;color:#0f1f3d;font-family:'Syne',sans-serif;">{{ shortlisted }}</div>
+                <div style="color:rgba(15,31,61,0.7);font-size:0.85rem;">Shortlisted</div>
+                <div style="color:rgba(15,31,61,0.4);font-size:0.7rem;margin-top:0.5rem;">⭐ View all →</div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="{% url 'jobs_by_status' 'interview_scheduled' %}" style="text-decoration:none;">
+            <div class="card border-0 shadow-sm p-3 h-100" style="background:#0f1f3d;border-radius:14px;">
+                <div style="font-size:2rem;font-weight:800;color:#f5a623;font-family:'Syne',sans-serif;">{{ interview_scheduled }}</div>
+                <div style="color:rgba(255,255,255,0.7);font-size:0.85rem;">Interview Scheduled</div>
+                <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;margin-top:0.5rem;">📅 View all →</div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="{% url 'jobs_by_status' 'interview_completed' %}" style="text-decoration:none;">
+            <div class="card border-0 shadow-sm p-3 h-100" style="background:#162c56;border-radius:14px;">
+                <div style="font-size:2rem;font-weight:800;color:#f5a623;font-family:'Syne',sans-serif;">{{ interview_completed }}</div>
+                <div style="color:rgba(255,255,255,0.7);font-size:0.85rem;">Interview Completed</div>
+                <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;margin-top:0.5rem;">✅ View all →</div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="{% url 'jobs_by_status' 'offer' %}" style="text-decoration:none;">
+            <div class="card border-0 shadow-sm p-3 h-100" style="background:#166534;border-radius:14px;">
+                <div style="font-size:2rem;font-weight:800;color:#4ade80;font-family:'Syne',sans-serif;">{{ offer }}</div>
+                <div style="color:rgba(255,255,255,0.7);font-size:0.85rem;">Offer Received</div>
+                <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;margin-top:0.5rem;">🎉 View all →</div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="{% url 'jobs_by_status' 'accepted' %}" style="text-decoration:none;">
+            <div class="card border-0 shadow-sm p-3 h-100" style="background:#14532d;border-radius:14px;">
+                <div style="font-size:2rem;font-weight:800;color:#4ade80;font-family:'Syne',sans-serif;">{{ accepted }}</div>
+                <div style="color:rgba(255,255,255,0.7);font-size:0.85rem;">Accepted</div>
+                <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;margin-top:0.5rem;">🏆 View all →</div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-3">
+        <a href="{% url 'jobs_by_status' 'rejected' %}" style="text-decoration:none;">
+            <div class="card border-0 shadow-sm p-3 h-100" style="background:#7f1d1d;border-radius:14px;">
+                <div style="font-size:2rem;font-weight:800;color:#f87171;font-family:'Syne',sans-serif;">{{ rejected }}</div>
+                <div style="color:rgba(255,255,255,0.7);font-size:0.85rem;">Rejected</div>
+                <div style="color:rgba(255,255,255,0.3);font-size:0.7rem;margin-top:0.5rem;">❌ View all →</div>
+            </div>
+        </a>
+    </div>
+</div>
 
 {% endblock %}

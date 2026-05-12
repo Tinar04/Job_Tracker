@@ -26,8 +26,9 @@ def DashBoard(request):
 def about(request):
     return render(request, 'AboutUs.html')
 
+
 def contact(request):
-    return render(request, 'Contact.html')
+    return render(request, 'tracker\contact.html')
 
 @login_required
 def jobs_by_status(request,status):
