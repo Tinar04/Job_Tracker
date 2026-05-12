@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-a#3%%k5c!o1m+8+i_#n#9+05$1zcuu@*wambjcg^hopt=rvd9@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['jobtracker-production-f44e.up.railway.app', 'localhost', '127.0.0.1']
 
 
 # Application definition
