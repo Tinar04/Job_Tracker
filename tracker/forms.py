@@ -11,4 +11,5 @@ class JobApplicationForm(forms.ModelForm):
                   'salary',
                   'source_of_application',
                   'job_description',
-                  'notes']
+                  'notes',
+                  'interview_date']

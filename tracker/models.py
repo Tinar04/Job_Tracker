@@ -23,6 +23,7 @@ class JobApplication(models.Model):
     job_description = models.TextField(blank=True)
     notes = models.TextField(blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    interview_date = models.DateField(null = True,blank = True)
 
 
     class Meta:
