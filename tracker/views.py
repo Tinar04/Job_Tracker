@@ -24,7 +24,7 @@ def DashBoard(request):
     
 
 def about(request):
-    return render(request, 'tracker/AboutUs.html')
+    return render(request, 'AboutUs.html')
 
 
 def contact(request):
@@ -49,7 +49,7 @@ def add_job(request):
             print(form.errors)
     else:
         form = JobApplicationForm()
-    return render(request, 'tracker/Add_job.html', {'form': form})
+    return render(request, 'Add_job.html', {'form': form})
 
 def register(request):
     if request.method == 'POST':
@@ -79,6 +79,6 @@ def edit_job(request, id):
             return redirect('home')
     else:
         form = JobApplicationForm(instance=job)
-    return render(request, 'tracker/edit_job.html', {'form': form})
+    return render(request, 'edit_job.html', {'form': form})
 
 

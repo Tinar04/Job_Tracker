@@ -1,0 +1,8 @@
+.env
+Job_Tracker.env
+db.sqlite3
+server.log
+server.err.log
+__pycache__/
+*.py[cod]
+staticfiles/
