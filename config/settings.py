@@ -40,7 +40,7 @@ def env_list(name, default=''):
 
 
 load_env_file(BASE_DIR / 'Job_Tracker.env')
-load_env_file(BASE_DIR.parent / '.env')
+load_env_file(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
