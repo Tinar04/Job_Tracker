@@ -29,9 +29,7 @@ SECRET_KEY = 'django-insecure-a#3%%k5c!o1m+8+i_#n#9+05$1zcuu@*wambjcg^hopt=rvd9@
 DEBUG = False
 
 
-ALLOWED_HOSTS = ['job-tracker-73a9.onrender.com', 'localhost', '127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = ['https://job-tracker-73a9.onrender.com']
 # Application definition
 
 INSTALLED_APPS = [
@@ -83,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.getenv('MYSQL_DATABASE', 'job_tracker'),
         'USER': os.getenv('MYSQL_USER', 'root'),
-        'PASSWORD': os.getenv('MYSQL_PASSWORD', ''),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD', 'root0420'),
         'HOST': os.getenv('MYSQL_HOST', 'localhost'),
         'PORT': os.getenv('MYSQL_PORT', '3306'),
     }
@@ -124,8 +122,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
+STATIC_URL  = 'static/'
 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
